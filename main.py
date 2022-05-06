@@ -177,3 +177,6 @@ except discord.errors.HTTPException:
     print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left")
   except:
       print("Rate limit error")
+  print("\nBlocked by Rate Limits\Restarting now...\n")
+  os.system("python restarter.py")
+  os.system('kill 1')
