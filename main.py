@@ -173,4 +173,7 @@ try:
   client.run(my_secret)
 except discord.errors.HTTPException:
   r = requests.head(url="https://discord.com/api/v1")
-  
+  try:
+    print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left")
+  except:
+      print("Rate limit error")
