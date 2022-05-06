@@ -10,5 +10,6 @@ Discord Bot for HNR's Evony Server
 
 - [ ] Evony terminology database
 - [ ] Evony server event reminder
+- [ ] Evony troop calculator
 
 
