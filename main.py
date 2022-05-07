@@ -2,20 +2,17 @@ import os
 import discord
 import requests
 from datetime import datetime
+from datetime import date
 from discord.ext import commands
 from keep_alive import keep_alive
 
 my_secret = os.environ['token']
 prefix = '$'
-version = 1.1
+version = 1.3
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
-github='https://github.com/haringpula/HNRs-Evony-Helper'
+github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 client = commands.Bot(command_prefix=prefix)
 client.remove_command('help')
-
-now = datetime.now()
-time = now.strftime("%H:%M:%S")
-#print(time)
 
 #Food, Wood, Stone, Iron, Gold, Power
 M = [[80, 80, 0, 0, 0, 2], [130, 130, 0, 0, 0, 2.7], [200, 200, 0, 0, 0, 3.65],
@@ -62,81 +59,107 @@ async def ping(ctx):
     print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
 
 
-# View commands list
 @client.command()
 async def commands(ctx):
     embed = discord.Embed(
         title='Bot Commands',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
         description='Here are the commands!',
-        color=discord.Color.dark_gray()
-    )
-    embed.set_author(
-        name=ctx.author.display_name,                    
-        icon_url=ctx.author.avatar_url
-    )
+        color=discord.Color.dark_gray())
+    embed.set_author(name=ctx.author.display_name,
+                     icon_url=ctx.author.avatar_url)
     embed.set_thumbnail(url=logo)
-    embed.add_field(
-        name='$help',
-        value='Show help',
-        inline=False
-    )
-    embed.add_field(
-        name='$commands',
-        value='Show commands list',
-        inline=False
-    )
-    embed.add_field(
-        name='$calc',
-        value='Calculate Troop Costs',
-        inline=False
-    )
-    embed.add_field(
-        name='$mean',
-        value='Give Evony abbreviation meaning',
-        inline=False
-    )
-    embed.add_field(
-        name='$new',
-        value="See what's in the new version",
-        inline=False
-    )
-    embed.add_field(
-        name='$about',
-        value='Learn more about me!',
-        inline=False
-    )
-    embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
+    embed.add_field(name='$help', value='Show help', inline=False)
+    embed.add_field(name='$commands', value='Show commands list', inline=False)
+    embed.add_field(name='$time',
+                    value='Show current server time',
+                    inline=False)
+    embed.add_field(name='$day', value='Show current server day', inline=False)
+    embed.add_field(name='$calc', value='Calculate Troop Costs', inline=False)
+    embed.add_field(name='$mean',
+                    value='Give Evony abbreviation meaning *In development*',
+                    inline=False)
+    embed.add_field(name='$new',
+                    value="See what's in the new version",
+                    inline=False)
+    embed.add_field(name='$about', value='Learn more about me!', inline=False)
+    embed.set_footer(
+        text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
 
-# Commands test
+
+@client.command()
+async def time(ctx):
+    now = datetime.now()
+    stime = now.strftime("%H:%M:%S")
+    embed = discord.Embed(
+        title='Current Server Time',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description="The server time is: {}".format(stime),
+        color=discord.Color.dark_gray())
+    embed.set_author(name=ctx.author.display_name,
+                     icon_url=ctx.author.avatar_url)
+    embed.set_thumbnail(url=logo)
+    embed.set_footer(
+        text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
+    del now
+    del stime
+
+
+@client.command()
+async def day(ctx):
+    today = date.today()
+    sday = today.strftime("%b-%d-%Y")
+    embed = discord.Embed(
+        title='Current Server Date',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description="The server currently is at: {}".format(sday),
+        color=discord.Color.dark_gray())
+    embed.set_author(name=ctx.author.display_name,
+                     icon_url=ctx.author.avatar_url)
+    embed.set_thumbnail(url=logo)
+    embed.set_footer(
+        text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
+    del today
+    del sday
+
+
 @client.command()
 async def help(ctx):
     embed = discord.Embed(
-        title='Bot Commands',
-        description='Welcome to help section. Here are the commands'
-
-    )
+        title='[HNR] Evony Bot',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description='Evony TKR Discord Helper Bot!',
+        color=discord.Color.dark_gray())
+    embed.set_author(name=ctx.author.display_name,
+                     icon_url=ctx.author.avatar_url)
     embed.set_thumbnail(url=logo)
-    embed.add_field(
-        name='$help',
-        value='List this help',
-        inline=True
-    )
+    embed.add_field(name='`$commands`',
+                    value='To show commands list',
+                    inline=False)
+    embed.add_field(name='Server Time',
+                    value='Get the current server time in Evony',
+                    inline=True)
+    embed.add_field(name='Server Date',
+                    value='Get the current day in the server in Evony',
+                    inline=True)
+    embed.add_field(name='Troop Calculator',
+                    value='Calculate rasources needed for troops',
+                    inline=True)
+    embed.set_footer(
+        text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
-    await ctx.send(f"Hi <@{ctx.author.id}>! I'm [HNR]Honor Alliance's Evony TKR Helper Bot v{version}!")
-    await ctx.send("Commands!\n`$help` - Show help\n`$commands` - Show commands list\n`$calc` - Calculate Troop Cost\n`$mean` - Give Evony abbreviation meaning (**In Development**)\n`$new` - See what's new in this version\n`$about` - Learn more about me!")
-    await ctx.send('For more information, contact my creator on <@645255797340766218> or on haringpula#1414')
 
-  
+
 @client.command()
 async def calc(ctx, *args):
-    '''
-        Calculates Troop Cost
-    '''
     if len(args) != 3:
         await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
-        await ctx.send('Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want')
+        await ctx.send(
+            'Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want'
+        )
     else:
         type = args[0].upper()
         tier = int(args[1])
@@ -176,23 +199,58 @@ async def calc(ctx, *args):
                 iron = num * S[tier - 1][3]
                 gold = num * S[tier - 1][4]
                 power = num * S[tier - 1][5]
-            await ctx.send(f'Hey <@{ctx.author.id}>, here is your Troop Calculation!')
-            await ctx.send(f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}')
+            embed = discord.Embed(
+                title='Troop Calculator',
+                url='https://github.com/haringpula/HNRs-Evony-Helper',
+                description='Hey <@{}>, here is your Troop Calculation!'.
+                format(ctx.author.id),
+                color=discord.Color.dark_gray())
+            embed.set_author(name=ctx.author.display_name,
+                             icon_url=ctx.author.avatar_url)
+            embed.set_thumbnail(url=logo)
+            embed.add_field(
+                name='Input',
+                value='Troop Type = {}\nTroop Tier = {}\nTroop Amount = {}'.
+                format(type, tier, num),
+                inline=True)
+            embed.add_field(
+                name='Output',
+                value=
+                'Food = {}\nWood = {}\nStone = {}\nIron = {}\nGold = {}\nPower Increase: {}'
+                .format(food, wood, stone, iron, gold, power),
+                inline=True)
+            embed.set_footer(text="Information requested by: {}".format(
+                ctx.author.display_name))
+            await ctx.send(embed=embed)
+            del type
+            del tier
+            del num
+            del food
+            del wood
+            del stone
+            del iron
+            del gold
+            del power
 
-# TODO
+
+# TODO dictionary
 @client.command()
 async def mean(ctx):
     await ctx.send('**This command is still in development**')
 
-# TODO
+
+# TODO new updates per version
 @client.command()
 async def new(ctx):
     await ctx.send('**This command is still in development**')
-  
+
+
 # TODO Link self and github repo, about
 @client.command()
 async def about(ctx):
-    await ctx.send('For more information, contact my creator on <@645255797340766218> or on haringpula#1414')
+    await ctx.send(
+        'For more information, contact my creator on <@645255797340766218> or on haringpula#1414'
+    )
 
 
 try:
@@ -202,7 +260,7 @@ try:
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
     try:
-        print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left")
+        print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left. Global: {r.headers['Global']}")
     except:
         print("Rate limit error")
     print("\nBlocked by Rate Limits\nRestarting now...\n")
