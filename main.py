@@ -6,12 +6,12 @@ from discord.ext import commands
 from keep_alive import keep_alive
 
 my_secret = os.environ['token']
-
-#client = commands.Bot(command_prefix='$')
-
-client = discord.Client()
-
+prefix = '$'
 version = 1.1
+logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
+github='https://github.com/haringpula/HNRs-Evony-Helper'
+client = commands.Bot(command_prefix=prefix)
+client.remove_command('help')
 
 now = datetime.now()
 time = now.strftime("%H:%M:%S")
@@ -55,136 +55,149 @@ async def on_ready():
     print(f'{client.user} is now live!')
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+# Commands test
+@client.command()
+async def ping(ctx):
+    await ctx.send('pong')
+    print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
 
-    if message.content.startswith('$ping'):
-        await message.channel.send('pong Dev cmd do not use')
-        print(
-            f'{message.author} is talking to {client.user} on {message.channel}!'
-        )
 
-    if message.content.startswith('$calc'):
-        query = message.content
-        det = query.split()
-        if len(det) != 4:
-            await message.channel.send(
-                'Usage: `$calc TroopType TroopTier TroopNum`')
-            await message.channel.send(
-                'Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want'
-            )
-        else:
-            type = det[1].upper()
-            tier = int(det[2])
-            num = int(det[3])
-            if (type not in ['M', 'G', 'R', 'S']):
-                await message.channel.send('Invalid Troop Type')
-            elif (tier < 1) or (tier > 15):
-                await message.channel.send('Invalid Troop Tier')
-            elif (num < 1):
-                await message.channel.send('Invalid Troop Amount')
-            else:
-                if type == 'M':
-                    food = num * M[tier - 1][0]
-                    wood = num * M[tier - 1][1]
-                    stone = num * M[tier - 1][2]
-                    iron = num * M[tier - 1][3]
-                    gold = num * M[tier - 1][4]
-                    power = num * M[tier - 1][5]
-                    await message.channel.send(
-                        f'Hey <@{message.author.id}>, here is Troop Calculation!'
-                    )
-                    await message.channel.send(
-                        f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}'
-                    )
-                elif type == 'G':
-                    food = num * G[tier - 1][0]
-                    wood = num * G[tier - 1][1]
-                    stone = num * G[tier - 1][2]
-                    iron = num * G[tier - 1][3]
-                    gold = num * G[tier - 1][4]
-                    power = num * G[tier - 1][5]
-                    await message.channel.send(
-                        f'Hey <@{message.author.id}>, here is Troop Calculation!'
-                    )
-                    await message.channel.send(
-                        f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}'
-                    )
-                elif type == 'R':
-                    food = num * R[tier - 1][0]
-                    wood = num * R[tier - 1][1]
-                    stone = num * R[tier - 1][2]
-                    iron = num * R[tier - 1][3]
-                    gold = num * R[tier - 1][4]
-                    power = num * R[tier - 1][5]
-                    await message.channel.send(
-                        f'Hey <@{message.author.id}>, here is Troop Calculation!'
-                    )
-                    await message.channel.send(
-                        f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}'
-                    )
-                elif type == 'S':
-                    food = num * S[tier - 1][0]
-                    wood = num * S[tier - 1][1]
-                    stone = num * S[tier - 1][2]
-                    iron = num * S[tier - 1][3]
-                    gold = num * S[tier - 1][4]
-                    power = num * S[tier - 1][5]
-                    await message.channel.send(
-                        f'Hey <@{message.author.id}>, here is Troop Calculation!'
-                    )
-                    await message.channel.send(
-                        f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}'
-                    )
-                else:
-                    await message.channel.send(
-                        'Internal Error. Contact creator on <@645255797340766218> or on haringpula#1414'
-                    )
-
-    if message.content.startswith('$help'):
-        await message.channel.send(
-            f"Hi <@{message.author.id}>! I'm [HNR]Honor Alliance's Evony TKR Helper Bot v{version}!"
-        )
-        await message.channel.send(
-            "Commands!\n`$help` - Show help\n`$commands` - Show commands list\n`$calc` - Calculate Troop Cost\n`$mean` - Give Evony abbreviation meaning (**In Development**)\n`$new` - See what's new in this version\n`$about` - Learn more about me!"
-        )
-        await message.channel.send(
-            'For more information, contact my creator on <@645255797340766218> or on haringpula#1414'
-        )
-
-    if message.content.startswith('$commands'):
-        await message.channel.send(
-            "Commands!\n`$help` - Show help\n`$commands` - Show commands list\n`$calc` - Calculate Troop Cost\n`$mean` - Give Evony abbreviation meaning (**In Development**)\n`$new` - See what's new in this version\n`$about` - Learn more about me!"
-        )
-
-    if message.content.startswith('$mean'):
-        await message.channel.send('**This command is still in development**')
-
-    if message.content.startswith('$about'):
-        await message.channel.send(
-            'For more information, contact my creator on <@645255797340766218> or on haringpula#1414'
-        )
-
-    if message.content.startswith('$new'):
-        await message.channel.send('**This command is still in development**')
-
+# View commands list
+@client.command()
+async def commands(ctx):
+    embed = discord.Embed(
+        title='Bot Commands',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description='Here are the commands!',
+        color=discord.Color.dark_gray()
+    )
+    embed.set_author(
+        name=ctx.author.display_name,                    
+        icon_url=ctx.author.avatar_url
+    )
+    embed.set_thumbnail(url=logo)
+    embed.add_field(
+        name='$help',
+        value='Show help',
+        inline=False
+    )
+    embed.add_field(
+        name='$commands',
+        value='Show commands list',
+        inline=False
+    )
+    embed.add_field(
+        name='$calc',
+        value='Calculate Troop Costs',
+        inline=False
+    )
+    embed.add_field(
+        name='$mean',
+        value='Give Evony abbreviation meaning',
+        inline=False
+    )
+    embed.add_field(
+        name='$new',
+        value="See what's in the new version",
+        inline=False
+    )
+    embed.add_field(
+        name='$about',
+        value='Learn more about me!',
+        inline=False
+    )
+    embed.set_footer(text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
 
 # Commands test
 @client.command()
-async def test(ctx):
-    await ctx.send('hello')
+async def help(ctx):
+    embed = discord.Embed(
+        title='Bot Commands',
+        description='Welcome to help section. Here are the commands'
 
+    )
+    embed.set_thumbnail(url=logo)
+    embed.add_field(
+        name='$help',
+        value='List this help',
+        inline=True
+    )
+    await ctx.send(embed=embed)
+    await ctx.send(f"Hi <@{ctx.author.id}>! I'm [HNR]Honor Alliance's Evony TKR Helper Bot v{version}!")
+    await ctx.send("Commands!\n`$help` - Show help\n`$commands` - Show commands list\n`$calc` - Calculate Troop Cost\n`$mean` - Give Evony abbreviation meaning (**In Development**)\n`$new` - See what's new in this version\n`$about` - Learn more about me!")
+    await ctx.send('For more information, contact my creator on <@645255797340766218> or on haringpula#1414')
 
-# Add commands
-#client.add_command(test)
+  
+@client.command()
+async def calc(ctx, *args):
+    '''
+        Calculates Troop Cost
+    '''
+    if len(args) != 3:
+        await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
+        await ctx.send('Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want')
+    else:
+        type = args[0].upper()
+        tier = int(args[1])
+        num = int(args[2])
+        if (type not in ['M', 'G', 'R', 'S']):
+            await ctx.send('Invalid Troop Type')
+        elif (tier < 1) or (tier > 15):
+            await ctx.send('Invalid Troop Tier')
+        elif (num < 1):
+            await ctx.send('Invalid Troop Amount')
+        else:
+            if type == 'M':
+                food = num * M[tier - 1][0]
+                wood = num * M[tier - 1][1]
+                stone = num * M[tier - 1][2]
+                iron = num * M[tier - 1][3]
+                gold = num * M[tier - 1][4]
+                power = num * M[tier - 1][5]
+            elif type == 'G':
+                food = num * G[tier - 1][0]
+                wood = num * G[tier - 1][1]
+                stone = num * G[tier - 1][2]
+                iron = num * G[tier - 1][3]
+                gold = num * G[tier - 1][4]
+                power = num * G[tier - 1][5]
+            elif type == 'R':
+                food = num * R[tier - 1][0]
+                wood = num * R[tier - 1][1]
+                stone = num * R[tier - 1][2]
+                iron = num * R[tier - 1][3]
+                gold = num * R[tier - 1][4]
+                power = num * R[tier - 1][5]
+            elif type == 'S':
+                food = num * S[tier - 1][0]
+                wood = num * S[tier - 1][1]
+                stone = num * S[tier - 1][2]
+                iron = num * S[tier - 1][3]
+                gold = num * S[tier - 1][4]
+                power = num * S[tier - 1][5]
+            await ctx.send(f'Hey <@{ctx.author.id}>, here is your Troop Calculation!')
+            await ctx.send(f'Food = {food}\nWood = {wood}\nStone = {stone}\nIron = {iron}\nGold = {gold}\nPower Increase: {power}')
 
-# Web Server to keep bot online
-#keep_alive()
+# TODO
+@client.command()
+async def mean(ctx):
+    await ctx.send('**This command is still in development**')
+
+# TODO
+@client.command()
+async def new(ctx):
+    await ctx.send('**This command is still in development**')
+  
+# TODO Link self and github repo, about
+@client.command()
+async def about(ctx):
+    await ctx.send('For more information, contact my creator on <@645255797340766218> or on haringpula#1414')
+
 
 try:
-
+    # Web Server to keep bot online
+    #keep_alive()
     client.run(my_secret)
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
