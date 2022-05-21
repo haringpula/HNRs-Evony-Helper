@@ -1,6 +1,7 @@
 import os
 import discord
 import requests
+import logging
 from datetime import datetime
 from datetime import date
 from discord.ext import commands
@@ -8,11 +9,17 @@ from keep_alive import keep_alive
 
 my_secret = os.environ['token']
 prefix = '$'
-version = 1.3
+version = 1.4
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 client = commands.Bot(command_prefix=prefix)
 client.remove_command('help')
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 #Food, Wood, Stone, Iron, Gold, Power
 M = [[80, 80, 0, 0, 0, 2], [130, 130, 0, 0, 0, 2.7], [200, 200, 0, 0, 0, 3.65],
@@ -72,17 +79,12 @@ async def commands(ctx):
     embed.add_field(name='$help', value='Show help', inline=False)
     embed.add_field(name='$commands', value='Show commands list', inline=False)
     embed.add_field(name='$time',
-                    value='Show current server time',
+                    value='Show current server time/day',
                     inline=False)
-    embed.add_field(name='$day', value='Show current server day', inline=False)
     embed.add_field(name='$calc', value='Calculate Troop Costs', inline=False)
     embed.add_field(name='$mean',
                     value='Give Evony abbreviation meaning *In development*',
                     inline=False)
-    embed.add_field(name='$new',
-                    value="See what's in the new version",
-                    inline=False)
-    embed.add_field(name='$about', value='Learn more about me!', inline=False)
     embed.set_footer(
         text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
@@ -92,10 +94,12 @@ async def commands(ctx):
 async def time(ctx):
     now = datetime.now()
     stime = now.strftime("%H:%M:%S")
+    today = date.today()
+    sday = today.strftime("%b-%d-%Y")
     embed = discord.Embed(
         title='Current Server Time',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
-        description="The server time is: {}".format(stime),
+        description="The server is on {}, {} at {}".format(now.strftime("%A"),sday,stime),
         color=discord.Color.dark_gray())
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
@@ -105,25 +109,9 @@ async def time(ctx):
     await ctx.send(embed=embed)
     del now
     del stime
-
-
-@client.command()
-async def day(ctx):
-    today = date.today()
-    sday = today.strftime("%b-%d-%Y")
-    embed = discord.Embed(
-        title='Current Server Date',
-        url='https://github.com/haringpula/HNRs-Evony-Helper',
-        description="The server currently is at: {}".format(sday),
-        color=discord.Color.dark_gray())
-    embed.set_author(name=ctx.author.display_name,
-                     icon_url=ctx.author.avatar_url)
-    embed.set_thumbnail(url=logo)
-    embed.set_footer(
-        text="Information requested by: {}".format(ctx.author.display_name))
-    await ctx.send(embed=embed)
     del today
     del sday
+    
 
 
 @client.command()
@@ -140,10 +128,7 @@ async def help(ctx):
                     value='To show commands list',
                     inline=False)
     embed.add_field(name='Server Time',
-                    value='Get the current server time in Evony',
-                    inline=True)
-    embed.add_field(name='Server Date',
-                    value='Get the current day in the server in Evony',
+                    value='Get the current server time/day in Evony',
                     inline=True)
     embed.add_field(name='Troop Calculator',
                     value='Calculate rasources needed for troops',
@@ -236,26 +221,19 @@ async def calc(ctx, *args):
 # TODO dictionary
 @client.command()
 async def mean(ctx):
+    r = requests.head(url="https://discord.com/api/v1")
+    print(r)
     await ctx.send('**This command is still in development**')
 
 
-# TODO new updates per version
-@client.command()
-async def new(ctx):
-    await ctx.send('**This command is still in development**')
 
 
-# TODO Link self and github repo, about
-@client.command()
-async def about(ctx):
-    await ctx.send(
-        'For more information, contact my creator on <@645255797340766218> or on haringpula#1414'
-    )
+
 
 
 try:
     # Web Server to keep bot online
-    #keep_alive()
+    keep_alive()
     client.run(my_secret)
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
