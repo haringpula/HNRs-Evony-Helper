@@ -9,7 +9,7 @@ from keep_alive import keep_alive
 
 my_secret = os.environ['token']
 prefix = '$'
-version = 1.4
+version = 1.5
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 client = commands.Bot(command_prefix=prefix)
@@ -97,7 +97,7 @@ async def time(ctx):
     today = date.today()
     sday = today.strftime("%b-%d-%Y")
     embed = discord.Embed(
-        title='Current Server Time',
+        title='Current Server Day/Time',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
         description="The server is on {}, {} at {}".format(now.strftime("%A"),sday,stime),
         color=discord.Color.dark_gray())
@@ -233,7 +233,7 @@ async def mean(ctx):
 
 try:
     # Web Server to keep bot online
-    keep_alive()
+    #keep_alive()
     client.run(my_secret)
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
