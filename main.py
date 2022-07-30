@@ -79,17 +79,17 @@ goodNightTime = datetime.time(hour=10, minute=59, second=00)
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
-    if not Goodnight.is_running():
-        Goodnight.start()  # If the task is not already running, start it.
-        print("Good night task started")
+    #if not Goodnight.is_running():
+        #Goodnight.start()  # If the task is not already running, start it.
+        #print("Good night task started")
     await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
-@tasks.loop(hours=24, next_iteration=goodNightTime)  # Create the task
-async def Goodnight():
-    channel = client.get_channel(967433695495598150)
-    await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
-    print("Night Working")
+#@tasks.loop(hours=24, next_iteration=goodNightTime)  # Create the task
+#async def Goodnight():
+    #channel = client.get_channel(967433695495598150)
+    #await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
+    #print("Night Working")
 
 
 # Commands test
