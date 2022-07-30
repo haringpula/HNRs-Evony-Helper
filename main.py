@@ -74,7 +74,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 # Create the time on which the task should always run
-goodNightTime = datetime.time(hour=10, minute=35, second=00)
+goodNightTime = time(hour=10, minute=35, second=00)
 
 
 @client.event
