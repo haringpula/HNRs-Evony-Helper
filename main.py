@@ -5,7 +5,6 @@ import logging
 from datetime import datetime
 from datetime import date
 from discord.ext import commands
-from keep_alive import keep_alive
 
 my_secret = os.getenv['token']
 prefix = '$'
@@ -241,6 +240,5 @@ except discord.errors.HTTPException:
         print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left. Global: {r.headers['Global']}")
     except:
         print("Rate limit error")
-    print("\nBlocked by Rate Limits\nRestarting now...\n")
-    os.system("python restarter.py")
-    os.system('kill 1')
+    print("\nBlocked by Rate Limits\nRestart now...\n")
+    
