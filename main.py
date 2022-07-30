@@ -1,17 +1,18 @@
 #
 # main.py created on Sat Jul 30 2022 by King Red Sanchez
-# Copyright (c) 2022 
+# Copyright (c) 2022
 # ~~~~~~~~~~~██████████████████████████REMOVE██████████████████████████~~~~~~~~~~~
 # Author Naming Conventions: █ Package names are in lowercase
 # Class/Interfaces names are in PascalCase █ Method/Instances names are in camelCase
 # Variable names are in camelCase (typeName) █ Constants are in SNAKE_CASE
 # Temporary variables names: i,j,k,m,n for int; c,d,e for char (else follow var names)
-# Author Code Conventions: █ TODO: pending completion █ NOTE: notes on implementation 
+# Author Code Conventions: █ TODO: pending completion █ NOTE: notes on implementation
 # BUG: valid / broken code █ XXX: bogus / working code █ FIXME: bogus / broken code
 # SEE: valid / working / spaghetti code █ HACK: valid / working / temporary
 # ~~~~~~~~~~███████████REMOVE IN FINAL VERSION ██ SAPERE AUDE███████████~~~~~~~~~~
 #
 
+# NOTE: Clear unused import
 import os
 import discord
 import requests
@@ -20,16 +21,17 @@ from datetime import datetime
 from datetime import date
 from discord.ext import commands
 
-#
+# SEE: static vars to separate access file
 my_secret = os.environ['token']
 prefix = '$'
-version = 1.5
+version = 1.6
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.default()
 client = commands.Bot(command_prefix=prefix,  intents=intents)
 client.remove_command('help')
 
+# Logging
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(
@@ -38,7 +40,7 @@ handler.setFormatter(logging.Formatter(
     '%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-#
+# XXX: fffffkin nuclear level refactoring required
 # Food, Wood, Stone, Iron, Gold, Power stored in 2d lists
 M = [[80, 80, 0, 0, 0, 2], [130, 130, 0, 0, 0, 2.7], [200, 200, 0, 0, 0, 3.65],
      [220, 220, 0, 120, 0, 4.92], [240, 240, 0, 260, 0, 6.64],
@@ -254,9 +256,12 @@ async def ppl(ctx):
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
     embed.set_thumbnail(url=logo)
-    embed.add_field(name='God', value='haringpula <@645255797340766218>', inline=False)
-    embed.add_field(name='Developer', value='lordcikenstein <@756084838154633237>', inline=True)
-    embed.add_field(name='Developer', value='Ramsss <@460745694794481666>', inline=True)
+    embed.add_field(
+        name='God', value='haringpula <@645255797340766218>', inline=False)
+    embed.add_field(name='Developer',
+                    value='Lordickenstein <@756084838154633237>', inline=True)
+    embed.add_field(name='Developer',
+                    value='Ramssss <@460745694794481666>', inline=True)
     embed.set_footer(
         text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
