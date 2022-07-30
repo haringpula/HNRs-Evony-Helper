@@ -6,7 +6,7 @@ from datetime import datetime
 from datetime import date
 from discord.ext import commands
 
-my_secret = os.getenv['token']
+my_secret = os.environ['token']
 prefix = '$'
 version = 1.5
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
@@ -223,11 +223,6 @@ async def mean(ctx):
     r = requests.head(url="https://discord.com/api/v1")
     print(r)
     await ctx.send('**This command is still in development**')
-
-
-
-
-
 
 
 try:
