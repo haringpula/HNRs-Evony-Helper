@@ -82,7 +82,8 @@ async def on_ready():
     stime = now.strftime("%H:%M:%S")
     today = date.today()
     sday = today.strftime("%b-%d-%Y")
-    if stime == "09:20:00":
+    # HACK: this is to test if timed events only fire once
+    if stime == "09:30:00":
         print("it works if this is displayed once")
 
 
