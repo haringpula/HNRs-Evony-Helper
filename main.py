@@ -78,6 +78,12 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 async def on_ready():
     print(f'{client.user} is now live!')
     await client.change_presence(activity=discord.Game(name="use `$help`"))
+    now = datetime.now()
+    stime = now.strftime("%H:%M:%S")
+    today = date.today()
+    sday = today.strftime("%b-%d-%Y")
+    if stime == "09:20:00":
+        print("it works if this is displayed once")
 
 
 # Commands test
