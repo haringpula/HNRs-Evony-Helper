@@ -7,7 +7,7 @@ from datetime import date
 from discord.ext import commands
 from keep_alive import keep_alive
 
-my_secret = os.environ['token']
+my_secret = os.getenv['token']
 prefix = '$'
 version = 1.5
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
