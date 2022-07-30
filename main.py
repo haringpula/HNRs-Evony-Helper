@@ -17,8 +17,7 @@ import os
 import discord
 import requests
 import logging
-from datetime import datetime
-from datetime import date
+import datetime
 from discord.ext import commands, tasks
 
 # SEE: static vars to separate access file
@@ -74,7 +73,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 # Create the time on which the task should always run
-goodNightTime = time(hour=10, minute=35, second=00)
+goodNightTime = datetime.time(hour=10, minute=50, second=00)
 
 
 @client.event
@@ -126,9 +125,9 @@ async def commands(ctx):
 
 @client.command()
 async def time(ctx):
-    now = datetime.now()
+    now = datetime.datetime.now()
     stime = now.strftime("%H:%M:%S")
-    today = date.today()
+    today = datetime.date.today()
     sday = today.strftime("%b-%d-%Y")
     embed = discord.Embed(
         title='Current Server Day/Time',
