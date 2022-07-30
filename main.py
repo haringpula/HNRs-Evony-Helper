@@ -254,9 +254,9 @@ async def ppl(ctx):
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
     embed.set_thumbnail(url=logo)
-    embed.add_field(name='God', value='King <@645255797340766218>', inline=False)
-    embed.add_field(name='Developer', value='Jerson <@645255797340766218>', inline=True)
-    embed.add_field(name='Developer', value='Ramil <@645255797340766218>', inline=True)
+    embed.add_field(name='God', value='haringpula <@645255797340766218>', inline=False)
+    embed.add_field(name='Developer', value='lordcikenstein <@756084838154633237>', inline=True)
+    embed.add_field(name='Developer', value='Ramsss <@460745694794481666>', inline=True)
     embed.set_footer(
         text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
