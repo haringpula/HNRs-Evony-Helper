@@ -1,3 +1,17 @@
+#
+# main.py created on Sat Jul 30 2022 by King Red Sanchez
+# Copyright (c) 2022 
+# ~~~~~~~~~~~██████████████████████████REMOVE██████████████████████████~~~~~~~~~~~
+# Author Naming Conventions: █ Package names are in lowercase
+# Class/Interfaces names are in PascalCase █ Method/Instances names are in camelCase
+# Variable names are in camelCase (typeName) █ Constants are in SNAKE_CASE
+# Temporary variables names: i,j,k,m,n for int; c,d,e for char (else follow var names)
+# Author Code Conventions: █ TODO: pending completion █ NOTE: notes on implementation 
+# BUG: valid / broken code █ XXX: bogus / working code █ FIXME: bogus / broken code
+# SEE: valid / working / spaghetti code █ HACK: valid / working / temporary
+# ~~~~~~~~~~███████████REMOVE IN FINAL VERSION ██ SAPERE AUDE███████████~~~~~~~~~~
+#
+
 import os
 import discord
 import requests
@@ -6,21 +20,26 @@ from datetime import datetime
 from datetime import date
 from discord.ext import commands
 
+#
 my_secret = os.environ['token']
 prefix = '$'
 version = 1.5
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
-client = commands.Bot(command_prefix=prefix)
+intents = discord.Intents.default()
+client = commands.Bot(command_prefix=prefix,  intents=intents)
 client.remove_command('help')
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(
+    filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter(
+    '%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-#Food, Wood, Stone, Iron, Gold, Power
+#
+# Food, Wood, Stone, Iron, Gold, Power stored in 2d lists
 M = [[80, 80, 0, 0, 0, 2], [130, 130, 0, 0, 0, 2.7], [200, 200, 0, 0, 0, 3.65],
      [220, 220, 0, 120, 0, 4.92], [240, 240, 0, 260, 0, 6.64],
      [260, 260, 0, 580, 0, 8.97], [300, 300, 0, 900, 0, 12.11],
@@ -56,6 +75,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
+    await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
 # Commands test
@@ -98,7 +118,8 @@ async def time(ctx):
     embed = discord.Embed(
         title='Current Server Day/Time',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
-        description="The server is on {}, {} at {}".format(now.strftime("%A"),sday,stime),
+        description="The server is on {}, {} at {}".format(
+            now.strftime("%A"), sday, stime),
         color=discord.Color.dark_gray())
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
@@ -110,7 +131,6 @@ async def time(ctx):
     del stime
     del today
     del sday
-    
 
 
 @client.command()
@@ -199,8 +219,7 @@ async def calc(ctx, *args):
                 inline=True)
             embed.add_field(
                 name='Output',
-                value=
-                'Food = {}\nWood = {}\nStone = {}\nIron = {}\nGold = {}\nPower Increase: {}'
+                value='Food = {}\nWood = {}\nStone = {}\nIron = {}\nGold = {}\nPower Increase: {}'
                 .format(food, wood, stone, iron, gold, power),
                 inline=True)
             embed.set_footer(text="Information requested by: {}".format(
@@ -225,15 +244,31 @@ async def mean(ctx):
     await ctx.send('**This command is still in development**')
 
 
+@client.command()
+async def ppl(ctx):
+    embed = discord.Embed(
+        title='Test Command',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description='calling ppl',
+        color=discord.Color.dark_gray())
+    embed.set_author(name=ctx.author.display_name,
+                     icon_url=ctx.author.avatar_url)
+    embed.set_thumbnail(url=logo)
+    embed.add_field(name='God', value='King <@645255797340766218>', inline=False)
+    embed.add_field(name='Developer', value='Jerson <@645255797340766218>', inline=True)
+    embed.add_field(name='Developer', value='Ramil <@645255797340766218>', inline=True)
+    embed.set_footer(
+        text="Information requested by: {}".format(ctx.author.display_name))
+    await ctx.send(embed=embed)
+
+# Catching Discord Rate Limits
 try:
-    # Web Server to keep bot online
-    #keep_alive()
     client.run(my_secret)
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
     try:
-        print(f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left. Global: {r.headers['Global']}")
+        print(
+            f"Rate limit {int(r.headers['Retry-After']) / 60} minutes left. Global: {r.headers['Global']}")
     except:
         print("Rate limit error")
     print("\nBlocked by Rate Limits\nRestart now...\n")
-    
