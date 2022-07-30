@@ -85,7 +85,7 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
-@tasks.loop(time=goodNightTime)  # Create the task
+@tasks.loop(next_iteration=goodNightTime)  # Create the task
 async def Goodnight():
     channel = client.get_channel(967433695495598150)
     await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
