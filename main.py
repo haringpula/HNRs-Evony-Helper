@@ -19,7 +19,7 @@ import requests
 import logging
 from datetime import datetime
 from datetime import date
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
@@ -73,18 +73,24 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 3000, 9000, 3000, 0, 81], [0, 4500, 13500, 4500, 200, 122],
      [0, 7500, 22500, 7500, 800, 163]]
 
+# Create the time on which the task should always run
+goodNightTime = datetime.time(hour=10, minute=35, second=00)
+
 
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
+    if not Goodnight.is_running():
+        Goodnight.start()  # If the task is not already running, start it.
+        print("Good night task started")
     await client.change_presence(activity=discord.Game(name="use `$help`"))
-    now = datetime.now()
-    stime = now.strftime("%H:%M:%S")
-    today = date.today()
-    sday = today.strftime("%b-%d-%Y")
-    # HACK: this is to test if timed events only fire once
-    if stime == "09:30:00":
-        print("it works if this is displayed once")
+
+
+@tasks.loop(time=goodNightTime)  # Create the task
+async def Goodnight():
+    channel = client.get_channel(967433695495598150)
+    await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
+    print("Night Working")
 
 
 # Commands test
@@ -191,21 +197,21 @@ async def calc(ctx, *args):
                 iron = num * M[tier - 1][3]
                 gold = num * M[tier - 1][4]
                 power = num * M[tier - 1][5]
-            elif type == 'G':
+            if type == 'G':
                 food = num * G[tier - 1][0]
                 wood = num * G[tier - 1][1]
                 stone = num * G[tier - 1][2]
                 iron = num * G[tier - 1][3]
                 gold = num * G[tier - 1][4]
                 power = num * G[tier - 1][5]
-            elif type == 'R':
+            if type == 'R':
                 food = num * R[tier - 1][0]
                 wood = num * R[tier - 1][1]
                 stone = num * R[tier - 1][2]
                 iron = num * R[tier - 1][3]
                 gold = num * R[tier - 1][4]
                 power = num * R[tier - 1][5]
-            elif type == 'S':
+            if type == 'S':
                 food = num * S[tier - 1][0]
                 wood = num * S[tier - 1][1]
                 stone = num * S[tier - 1][2]
