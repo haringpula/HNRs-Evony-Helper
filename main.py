@@ -88,7 +88,7 @@ async def announce():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=14, minute=41).strftime("%H:%M")
+    midnight = datetime.time(hour=14, minute=50).strftime("%H:%M")
 
     if time != midnight:
         print("Time: {}, Check: {}".format(time,midnight))
