@@ -87,11 +87,10 @@ async def announce():
     # Create the time on which the task should always run
     midnight = datetime.time(hour=10, minute=20, second=00)
 
-    if time != midnight:
-        return
-    channel = client.get_channel(967433695495598150)
-    await channel.send("Event succesful")
-    print("Announce Working")
+    if time == midnight:
+        channel = client.get_channel(967433695495598150)
+        await channel.send("Event succesful")
+        print("Announce Working")
 
 
 # Commands test
