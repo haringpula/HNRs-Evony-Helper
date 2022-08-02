@@ -98,7 +98,9 @@ async def announce():
 @client.command()
 async def ping(ctx):
     await ctx.send('pong')
+    channel = client.get_channel(967433695495598150)
     print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
+    print(channel)
 
 
 @client.command()
