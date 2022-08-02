@@ -85,7 +85,7 @@ async def announce():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M:%S")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=10, minute=20, second=00)
+    midnight = datetime.time(hour=10, minute=55, second=00)
 
     if time == midnight:
         channel = client.get_channel(967433695495598150)
