@@ -78,23 +78,22 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 async def on_ready():
     print(f'{client.user} is now live!')
     await client.change_presence(activity=discord.Game(name="use `$help`"))
-    if not announce.is_running():
-        announce.start()  # If the task is not already running, start it.
+    if not event.is_running():
+        event.start()  
         print("Announcement Started")
 
 
-@tasks.loop(seconds=30.0)  # Create the task
-async def announce():
+@tasks.loop(minutes=1)
+async def event():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=14, minute=50).strftime("%H:%M")
+    midnight = datetime.time(hour=15, minute=20).strftime("%H:%M")
 
     if time != midnight:
-        print("Time: {}, Check: {}".format(time,midnight))
         return
     channel = client.get_channel(967433695495598150)
-    await channel.send("Event succesful")
+    # await channel.send("Event succesful")
     print("Announce Working")
 
 
