@@ -73,19 +73,16 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 # Create the time on which the task should always run
-goodNightTime = datetime.time(hour=10, minute=59, second=00)
+midnight = datetime.time(hour=10, minute=59, second=00)
 
 
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
-    #if not Goodnight.is_running():
-        #Goodnight.start()  # If the task is not already running, start it.
-        #print("Good night task started")
     await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
-#@tasks.loop(hours=24, next_iteration=goodNightTime)  # Create the task
+#@tasks.loop()  # Create the task
 #async def Goodnight():
     #channel = client.get_channel(967433695495598150)
     #await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
@@ -126,14 +123,14 @@ async def commands(ctx):
 @client.command()
 async def time(ctx):
     now = datetime.datetime.now()
-    stime = now.strftime("%H:%M:%S")
-    today = datetime.date.today()
-    sday = today.strftime("%b-%d-%Y")
+    day_name = now.strftime("%A") 
+    time = now.strftime("%H:%M:%S")
+    day_full = now.strftime("%b-%d-%Y")
     embed = discord.Embed(
         title='Current Server Day/Time',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
         description="The server is on {}, {} at {}".format(
-            now.strftime("%A"), sday, stime),
+            day_name, day_full, time),
         color=discord.Color.dark_gray())
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
@@ -142,9 +139,9 @@ async def time(ctx):
         text="Information requested by: {}".format(ctx.author.display_name))
     await ctx.send(embed=embed)
     del now
-    del stime
-    del today
-    del sday
+    del day_full
+    del day_name
+    del time
 
 
 @client.command()
