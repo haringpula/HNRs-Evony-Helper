@@ -80,17 +80,19 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
-@tasks.loop(seconds=1.0)  # Create the task
+@tasks.loop(seconds=30.0)  # Create the task
 async def announce():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=11, minute=15).strftime("%H:%M")
+    midnight = datetime.time(hour=11, minute=25).strftime("%H:%M")
 
-    if time == midnight:
-        channel = client.get_channel(967433695495598150)
-        await channel.send("Event succesful")
-        print("Announce Working")
+    if time != midnight:
+        print("Time: {}, Check: {}".format(time,midnight))
+        return
+    channel = client.get_channel(967433695495598150)
+    await channel.send("Event succesful")
+    print("Announce Working")
 
 
 # Commands test
