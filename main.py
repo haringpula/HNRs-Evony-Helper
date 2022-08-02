@@ -72,8 +72,6 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 3000, 9000, 3000, 0, 81], [0, 4500, 13500, 4500, 200, 122],
      [0, 7500, 22500, 7500, 800, 163]]
 
-# Create the time on which the task should always run
-midnight = datetime.time(hour=10, minute=59, second=00)
 
 
 @client.event
@@ -82,11 +80,18 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="use `$help`"))
 
 
-#@tasks.loop()  # Create the task
-#async def Goodnight():
-    #channel = client.get_channel(967433695495598150)
-    #await channel.send("Good night! Make sure to go to sleep early, and get enough sleep!")
-    #print("Night Working")
+@tasks.loop(seconds=1.0)  # Create the task
+async def announce():
+    now = datetime.datetime.now()
+    time = now.strftime("%H:%M:%S")
+    # Create the time on which the task should always run
+    midnight = datetime.time(hour=10, minute=20, second=00)
+
+    if time != midnight:
+        return
+    channel = client.get_channel(967433695495598150)
+    await channel.send("Event succesful")
+    print("Announce Working")
 
 
 # Commands test
