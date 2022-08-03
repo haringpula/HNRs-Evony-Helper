@@ -78,7 +78,7 @@ async def on_ready():
     print(f'{client.user} is now live!')
     activity = discord.Activity(
         name="use `$help`", type=discord.ActivityType.watching)
-    client = discord.Client(activity=activity)
+    await client.change_presence(activity=activity)
     if not event.is_running():
         event.start()
         print("Announcement Started")
