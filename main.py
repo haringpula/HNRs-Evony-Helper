@@ -77,9 +77,8 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 async def on_ready():
     print(f'{client.user} is now live!')
     activity = discord.Activity(
-        #name="use `$help`", 
-        state="*Watching here*",
-        type=discord.ActivityType.competing,
+        name="use `$help`", 
+        type=discord.ActivityType.listening,
         details="Huh")
     await client.change_presence(activity=activity)
     if not event.is_running():
