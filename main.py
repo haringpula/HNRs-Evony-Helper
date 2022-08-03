@@ -76,7 +76,9 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
-    await client.change_presence(activity=discord.Game(name="use `$help`"))
+    activity = discord.Activity(
+        name="use `$help`", type=discord.ActivityType.watching)
+    client = discord.Client(activity=activity)
     if not event.is_running():
         event.start()
         print("Announcement Started")
@@ -172,7 +174,7 @@ async def help(ctx):
                     inline=True)
     embed.set_footer(
         text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>"
-        )
+    )
     await ctx.send(embed=embed)
 
 
