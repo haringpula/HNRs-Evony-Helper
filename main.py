@@ -22,7 +22,7 @@ from discord.ext import commands, tasks
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
-prefix = '$'
+prefix = '/'
 version = 1.6
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
@@ -77,9 +77,8 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 async def on_ready():
     print(f'{client.user} is now live!')
     activity = discord.Activity(
-        name="use `$help`", 
-        type=discord.ActivityType.listening,
-        details="Huh")
+        name="for `$help`",
+        type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
     if not event.is_running():
         event.start()
