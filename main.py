@@ -23,11 +23,14 @@ from discord.ext import commands, tasks
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
 prefix = '/'
-version = 1.6
+version = 1.7
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.default()
 client = commands.Bot(command_prefix=prefix,  intents=intents)
+activity = discord.Activity(
+    name="for $help",
+    type=discord.ActivityType.watching)
 client.remove_command('help')
 
 # Logging
@@ -76,9 +79,6 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 @client.event
 async def on_ready():
     print(f'{client.user} is now live!')
-    activity = discord.Activity(
-        name="for `$help`",
-        type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
     if not event.is_running():
         event.start()
@@ -103,9 +103,7 @@ async def event():
 @client.command()
 async def ping(ctx):
     await ctx.send('pong')
-    channel = client.get_channel(967433695495598150)
     print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
-    print(channel)
 
 
 @client.command()
