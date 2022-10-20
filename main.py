@@ -22,7 +22,7 @@ from discord.ext import commands, tasks
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
-prefix = '/'
+prefix = '$'
 version = 1.7
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
