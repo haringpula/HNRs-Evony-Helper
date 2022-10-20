@@ -22,7 +22,7 @@ from discord.ext import commands, tasks
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
-prefix = '$'
+prefix = '/'
 version = 1.7
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
@@ -157,7 +157,7 @@ async def help(ctx):
     embed = discord.Embed(
         title='[HNR] Evony Bot',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
-        description='*Evony TKR Discord Helper Bot!*',
+        description='**Evony TKR Discord Helper Bot!**',
         color=discord.Color.dark_gray())
     embed.set_author(name="**For Evony The Kings Return**",
                      icon_url=client.user.avatar_url)
