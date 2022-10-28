@@ -19,6 +19,7 @@ import requests
 import logging
 import datetime
 from discord.ext import commands, tasks
+from keep_alive import keep_alive
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
@@ -265,6 +266,8 @@ async def mean(ctx):
 # Catching Discord Rate Limits
 try:
     client.run(my_secret)
+    # Web Server to keep bot online
+    keep_alive()
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
     try:
