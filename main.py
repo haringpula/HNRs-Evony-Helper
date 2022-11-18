@@ -129,8 +129,9 @@ async def event():
 # Commands test
 @bot.tree.command(name='mycommand')
 async def ping(interaction: discord.Interaction):
-    await ctx.send('pong')
-    print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
+    await interaction.response.send_message(f"pong")
+    #await ctx.send('pong')
+    #print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
 
 
 @bot.tree.command()
