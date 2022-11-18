@@ -92,14 +92,16 @@ async def first_command(interaction):
 async def on_ready():
     print(f'{bot.user} is now live!')
     await bot.change_presence(activity=activity)
-    guild = discord.Object(id=835899395219652671)  
-    # you can use a full discord.Guild as the method accepts a Snowflake
-    bot.tree.copy_global_to(guild=guild)
     #await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
         print("Announcement Started")
 
+@bot.command()
+async def sync(ctx):
+    guild = ctx.guild or discord.Object(id=835899395219652671)  
+    # you can use a full discord.Guild as the method accepts a Snowflake
+    bot.tree.copy_global_to(guild=guild)
 
 @tasks.loop(minutes=1)
 async def event():
@@ -113,7 +115,6 @@ async def event():
     channel = bot.get_channel(967433695495598150)
     # await channel.send("Event succesful")
     print("Announce Working")
-
 
 # Commands test
 @bot.tree.command()
