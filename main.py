@@ -33,7 +33,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 # Test for new slash commands
-#tree = app_commands.CommandTree(bot)
+tree = app_commands.CommandTree(bot)
 activity = discord.Activity(
     name="for $help",
     type=discord.ActivityType.watching)
@@ -82,17 +82,17 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 
-#@tree.command(name = "commandname", description = "My first application Command", guild=discord.Object(id=12417128931)) 
+@tree.context_menu(name = "hello", description = "My first application Command", guild=discord.Object(id=835899395219652671)) 
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
-async def first_command(interaction):
+async def hello(interaction: discord.Interaction, message: discord.Message):
     await interaction.response.send_message("Hello!")
 
 @bot.event
 async def on_ready():
     print(f'{bot.user} is now live!')
     await bot.change_presence(activity=activity)
-    #await tree.sync(guild=discord.Object(id=835899395219652671))
+    await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
         print("Announcement Started")
