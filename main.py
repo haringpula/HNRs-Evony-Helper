@@ -103,7 +103,7 @@ async def syncing(ctx):
     # you can use a full discord.Guild as the method accepts a Snowflake
     bot.tree.copy_global_to(guild=guild)
     # TODO:
-    commands.sync()
+    #commands.sync()
     app_commands.sync()
     await ctx.send('Synced')
 
