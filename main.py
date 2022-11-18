@@ -23,11 +23,12 @@ from keep_alive import keep_alive
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
-prefix = '$'
-version = 1.7
+prefix = '/'
+version = 1.8
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.default()
+intents.message_content = True
 client = commands.Bot(command_prefix=prefix,  intents=intents)
 activity = discord.Activity(
     name="for $help",
