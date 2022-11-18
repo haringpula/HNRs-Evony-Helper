@@ -32,7 +32,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = commands.Bot(command_prefix=prefix,  intents=intents)
 # Test for new slash commands
-tree = app_commands.CommandTree(client)
 activity = discord.Activity(
     name="for $help",
     type=discord.ActivityType.watching)
