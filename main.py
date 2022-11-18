@@ -84,9 +84,9 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
-@app_commands.command(name = "hello", description = "My first application Command") 
-async def hello(interaction: discord.Interaction, message: discord.Message):
-    await interaction.response.send_message("Hello!")
+#@app_commands.command(name = "hello", description = "My first application Command") 
+#async def hello(interaction: discord.Interaction, message: discord.Message):
+#    await interaction.response.send_message("Hello!")
 
 @bot.event
 async def on_ready():
@@ -101,12 +101,16 @@ async def on_ready():
 async def syncing(ctx):
     #guild = ctx.guild #or discord.Object(id=835899395219652671)  
     # you can use a full discord.Guild as the method accepts a Snowflake
-    fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+    try:
+        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+        await ctx.send(f"Synced {len(fmt)} commands.")
+    except Exception as e:
+        print(e)
     #bot.tree.copy_global_to(guild=guild)
     # TODO:
     #commands.sync()
     #app_commands.sync()
-    await ctx.send(f"Synced {len(fmt)} commands.")
+    
 
 
 @tasks.loop(minutes=1)
@@ -124,7 +128,7 @@ async def event():
 
 # Commands test
 @bot.tree.command(name='mycommand')
-async def ping(ctx):
+async def ping(interaction: discord.Interaction):
     await ctx.send('pong')
     print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
 
