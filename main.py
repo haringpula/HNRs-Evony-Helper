@@ -29,7 +29,7 @@ prefix = '/'
 version = 1.8
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
-intents = discord.Intents.all()
+intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 # Test for new slash commands
