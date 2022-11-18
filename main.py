@@ -82,7 +82,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 
-@app_commands.command(name = "hello", description = "My first application Command", guild=discord.Object(id=835899395219652671)) 
+@app_commands.command(name = "hello", description = "My first application Command") 
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def hello(interaction: discord.Interaction, message: discord.Message):
