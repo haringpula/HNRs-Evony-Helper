@@ -102,7 +102,7 @@ async def syncing(ctx):
     #guild = ctx.guild #or discord.Object(id=835899395219652671)  
     # you can use a full discord.Guild as the method accepts a Snowflake
     try:
-        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
+        fmt = await ctx.bot.tree.sync()
         await ctx.send(f"Synced {len(fmt)} commands.")
     except Exception as e:
         print(e)
