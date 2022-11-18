@@ -31,13 +31,13 @@ logo = 'https://cdn.discordapp.com/attachments/968595427228286976/97212561673014
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.default()
 intents.message_content = True
-client = commands.Bot(command_prefix=prefix,  intents=intents)
+bot = commands.Bot(command_prefix=prefix,  intents=intents)
 # Test for new slash commands
-#tree = app_commands.CommandTree(client)
+#tree = app_commands.CommandTree(bot)
 activity = discord.Activity(
     name="for $help",
     type=discord.ActivityType.watching)
-client.remove_command('help')
+bot.remove_command('help')
 
 # Logging
 logger = logging.getLogger('discord')
@@ -83,17 +83,18 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 
 
 #@tree.command(name = "commandname", description = "My first application Command", guild=discord.Object(id=12417128931)) 
-#Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, but note that it will take some time (up to an hour) to register the command if it's for all guilds.
+# Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
+# but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def first_command(interaction):
     await interaction.response.send_message("Hello!")
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user} is now live!')
-    await client.change_presence(activity=activity)
+    print(f'{bot.user} is now live!')
+    await bot.change_presence(activity=activity)
     guild = discord.Object(id=835899395219652671)  
     # you can use a full discord.Guild as the method accepts a Snowflake
-    client.tree.copy_global_to(guild=guild)
+    bot.tree.copy_global_to(guild=guild)
     #await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
@@ -109,19 +110,19 @@ async def event():
 
     if time != midnight:
         return
-    channel = client.get_channel(967433695495598150)
+    channel = bot.get_channel(967433695495598150)
     # await channel.send("Event succesful")
     print("Announce Working")
 
 
 # Commands test
-@client.tree.command()
+@bot.tree.command()
 async def ping(ctx):
     await ctx.send('pong')
-    print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
+    print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
 
 
-@client.tree.command()
+@bot.tree.command()
 async def commands(ctx):
     embed = discord.Embed(
         title='Bot Commands',
@@ -143,7 +144,7 @@ async def commands(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command()
+@bot.command()
 async def time(ctx):
     now = datetime.datetime.now()
     day_name = now.strftime("%A")
@@ -167,7 +168,7 @@ async def time(ctx):
     del time
 
 
-@client.command()
+@bot.command()
 async def help(ctx):
     embed = discord.Embed(
         title='[HNR] Evony Bot',
@@ -175,7 +176,7 @@ async def help(ctx):
         description='**Evony TKR Discord Helper Bot!**',
         color=discord.Color.dark_gray())
     embed.set_author(name="**For Evony The Kings Return**",
-                     icon_url=client.user.avatar_url)
+                     icon_url=bot.user.avatar_url)
     embed.set_thumbnail(url=logo)
     embed.add_field(name='`$commands`',
                     value='To show commands list',
@@ -192,7 +193,7 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command()
+@bot.command()
 async def calc(ctx, *args):
     if len(args) != 3:
         await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
@@ -272,14 +273,14 @@ async def calc(ctx, *args):
 
 
 # TODO dictionary
-@client.command()
+@bot.command()
 async def mean(ctx):
     await ctx.send('**This command is still in development**')
 
 
 # Catching Discord Rate Limits
 try:
-    client.run(my_secret)
+    bot.run(my_secret)
     # Web Server to keep bot online
     keep_alive()
 except discord.errors.HTTPException:
