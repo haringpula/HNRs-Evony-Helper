@@ -29,7 +29,7 @@ prefix = '/'
 version = 1.8
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 # Test for new slash commands
@@ -84,9 +84,9 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
 
 # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
-#@app_commands.command(name = "hello", description = "My first application Command") 
-#async def hello(interaction: discord.Interaction, message: discord.Message):
-#    await interaction.response.send_message("Hello!")
+@bot.tree.command(name = "hello") 
+async def hello(interaction: discord.Interaction):
+    await interaction.response.send_message("Hello!")
 
 @bot.event
 async def on_ready():
