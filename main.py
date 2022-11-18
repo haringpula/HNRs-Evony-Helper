@@ -92,7 +92,7 @@ async def hello(interaction: discord.Interaction, message: discord.Message):
 async def on_ready():
     print(f'{bot.user} is now live!')
     await bot.change_presence(activity=activity)
-    await tree.sync(guild=discord.Object(id=835899395219652671))
+    #await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
         print("Announcement Started")
@@ -106,7 +106,7 @@ async def syncing(ctx):
     # TODO:
     #commands.sync()
     #app_commands.sync()
-    await ctx.send('Synced')
+    await ctx.send(f"Synced {len(fmt)} commands.")
 
 
 @tasks.loop(minutes=1)
