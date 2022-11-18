@@ -119,7 +119,7 @@ async def event():
     print("Announce Working")
 
 # Commands test
-@bot.tree.command()
+@bot.tree.command(name='mycommand')
 async def ping(ctx):
     await ctx.send('pong')
     print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
