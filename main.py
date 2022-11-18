@@ -21,6 +21,7 @@ import datetime
 from discord.ext import commands, tasks
 from keep_alive import keep_alive
 from discord import app_commands
+import discord.ext.commands.bot
 
 # SEE: static vars to separate access file
 my_secret = os.environ['token']
@@ -90,6 +91,9 @@ async def first_command(interaction):
 async def on_ready():
     print(f'{client.user} is now live!')
     await client.change_presence(activity=activity)
+    guild = discord.Object(id=835899395219652671)  
+    # you can use a full discord.Guild as the method accepts a Snowflake
+    client.tree.copy_global_to(guild=guild)
     #await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
@@ -111,13 +115,13 @@ async def event():
 
 
 # Commands test
-@client.command()
+@client.tree.command()
 async def ping(ctx):
     await ctx.send('pong')
     print(f"{ctx.author} is talking to {client.user} on {ctx.guild}")
 
 
-@client.command()
+@client.tree.command()
 async def commands(ctx):
     embed = discord.Embed(
         title='Bot Commands',
