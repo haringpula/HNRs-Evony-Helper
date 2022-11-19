@@ -171,7 +171,7 @@ async def help(interaction: discord.Interaction):
         description='**Evony TKR Discord Helper Bot!**',
         color=discord.Color.dark_gray())
     embed.set_author(name="**For Evony The Kings Return**",
-                     icon_url=bot.avatar.url)
+                     icon_url=bot.user.display_avatar)
     embed.set_thumbnail(url=logo)
     embed.add_field(name='`$commands`',
                     value='**To show commands list to begin**',
