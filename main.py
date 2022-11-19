@@ -108,7 +108,6 @@ async def event():
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
     midnight = datetime.time(hour=00, minute=00).strftime("%H:%M")
-
     if time != midnight:
         return
     channel = bot.get_channel(967433695495598150)
@@ -116,14 +115,14 @@ async def event():
     print("Announce Working")
 
 # Commands test
-@bot.tree.command(name='ping', description='ping pong')
+@bot.tree.command(name='ping', description='Ping Pong')
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"pong")
     print(f"{interaction.user} is talking to {bot.user} on {interaction.guild}")
 
 
-@bot.tree.command()
-async def commands(ctx):
+@bot.tree.command(name='commands',description='List of Commands')
+async def commands(interaction: discord.Interaction):
     embed = discord.Embed(
         title='Bot Commands',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
@@ -140,9 +139,8 @@ async def commands(ctx):
                     value='Give Evony abbreviation meaning *In development*',
                     inline=False)
     embed.set_footer(
-        text="Information requested by: {}".format(ctx.author.display_name))
-    await ctx.send(embed=embed)
-
+        text="Information requested by: {}".format(interaction.author.display_name))
+    await interaction.response.send_message(embed=embed)
 
 @bot.command()
 async def time(ctx):
