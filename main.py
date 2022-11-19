@@ -122,7 +122,7 @@ async def ping(interaction: discord.Interaction):
 
 
 @bot.tree.command(name='commands',description='List of Commands')
-async def commands(interaction: discord.Interaction):
+async def commands(interaction: discord.Interaction, message: discord.Message):
     embed = discord.Embed(
         title='Bot Commands',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
@@ -139,7 +139,7 @@ async def commands(interaction: discord.Interaction):
                     value='Give Evony abbreviation meaning *In development*',
                     inline=False)
     embed.set_footer(
-        text="Information requested by: {}".format(interaction.author.display_name))
+        text="Information requested by: {}".format(interaction.user))
     await interaction.response.send_message(embed=embed)
 
 @bot.command()
@@ -271,9 +271,9 @@ async def calc(ctx, *args):
 
 
 # TODO dictionary
-@bot.tree.command()
-async def mean(ctx):
-    await ctx.send('**This command is still in development**')
+@bot.tree.command(name='commands',description='List of Commands')
+async def mean(interaction: discord.Interaction, message: discord.Message):
+    await interaction.response.send_message('**This command is still in development**')
 
 
 # Catching Discord Rate Limits
