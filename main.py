@@ -6,9 +6,9 @@
 # Class/Interfaces names are in PascalCase █ Method/Instances names are in camelCase
 # Variable names are in camelCase (typeName) █ Constants are in SNAKE_CASE
 # Temporary variables names: i,j,k,m,n for int; c,d,e for char (else follow var names)
-# Author Code Conventions: █ TODO: pending completion █ NOTE: notes on implementation
-# BUG: valid / broken code █ XXX: bogus / working code █ FIXME: bogus / broken code
-# SEE: valid / working / spaghetti code █ HACK: valid / working / temporary
+# Author Code Conventions: █ TODO pending completion █ NOTE notes on implementation
+# BUG valid / broken code █ XXX bogus / working code █ FIXME bogus / broken code
+# SEE valid / working / spaghetti code █ HACK valid / working / temporary
 # ~~~~~~~~~~███████████REMOVE IN FINAL VERSION ██ SAPERE AUDE███████████~~~~~~~~~~
 #
 
@@ -20,10 +20,9 @@ import logging
 import datetime
 from discord.ext import commands, tasks
 from keep_alive import keep_alive
-from discord import app_commands
 import discord.ext.commands.bot
 
-# SEE: static vars to separate access file
+# Initialization
 my_secret = os.environ['token']
 prefix = '/'
 version = 1.8
@@ -32,8 +31,6 @@ github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
-# Test for new slash commands
-#tree = app_commands.CommandTree(bot)
 activity = discord.Activity(
     name="for $help",
     type=discord.ActivityType.watching)
@@ -82,8 +79,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 
-# Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, 
-# but note that it will take some time (up to an hour) to register the command if it's for all guilds.
+
 @bot.tree.command(name = "hello") 
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("Hello!")
@@ -98,20 +94,12 @@ async def on_ready():
         print("Announcement Started")
 
 @bot.command()
-async def syncing(ctx):
-    #guild = ctx.guild #or discord.Object(id=835899395219652671)  
-    # you can use a full discord.Guild as the method accepts a Snowflake
+async def sync(ctx):
     try:
         fmt = await ctx.bot.tree.sync()
         await ctx.send(f"Synced {len(fmt)} commands.")
     except Exception as e:
         print(e)
-    #bot.tree.copy_global_to(guild=guild)
-    # TODO:
-    #commands.sync()
-    #app_commands.sync()
-    
-
 
 @tasks.loop(minutes=1)
 async def event():
@@ -127,11 +115,10 @@ async def event():
     print("Announce Working")
 
 # Commands test
-@bot.tree.command(name='mycommand')
+@bot.tree.command(name='ping', description='ping pong')
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"pong")
-    #await ctx.send('pong')
-    #print(f"{ctx.author} is talking to {bot.user} on {ctx.guild}")
+    print(f"{interaction.user} is talking to {bot.user} on {interaction.guild}")
 
 
 @bot.tree.command()
