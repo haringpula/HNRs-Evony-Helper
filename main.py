@@ -32,7 +32,7 @@ intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 activity = discord.Activity(
-    name=f"{len(bot.guilds)} servers watched",
+    name=f"{len(bot.fetch_guilds())} | /help",
     type=discord.ActivityType.watching)
 bot.remove_command('help')
 
