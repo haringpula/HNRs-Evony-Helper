@@ -32,7 +32,7 @@ intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 activity = discord.Activity(
-    name=f"{bot.guilds} servers | /help",
+    name=f"{len(bot.guilds)} servers | /help",
     type=discord.ActivityType.watching)
 bot.remove_command('help')
 
@@ -79,10 +79,10 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 
-
-@bot.tree.command(name = "hello") 
+@bot.tree.command(name="hello")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("Hello!")
+
 
 @bot.event
 async def on_ready():
@@ -92,6 +92,7 @@ async def on_ready():
         event.start()
         print("Announcement Started")
 
+
 @bot.command()
 async def sync(ctx):
     try:
@@ -99,6 +100,7 @@ async def sync(ctx):
         await ctx.send(f"Synced {len(fmt)} commands.")
     except Exception as e:
         print(e)
+
 
 @tasks.loop(minutes=1)
 async def event():
@@ -271,7 +273,7 @@ async def calc(ctx, *args):
 
 
 # TODO dictionary
-@bot.command()
+@bot.tree.command()
 async def mean(ctx):
     await ctx.send('**This command is still in development**')
 
