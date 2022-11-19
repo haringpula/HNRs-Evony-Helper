@@ -79,11 +79,6 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 
-@bot.tree.command(name="hello")
-async def hello(interaction: discord.Interaction):
-    await interaction.response.send_message("Hello!")
-
-
 @bot.event
 async def on_ready():
     print(f'{bot.user} is now live!')
@@ -271,7 +266,7 @@ async def calc(ctx, *args):
 
 
 # TODO dictionary
-@bot.tree.command(name='commands',description='List of Commands')
+@bot.tree.command(name='mean',description='Shorthand words for Evony TKR')
 async def mean(interaction: discord.Interaction):
     await interaction.response.send_message('**This command is still in development**')
 
