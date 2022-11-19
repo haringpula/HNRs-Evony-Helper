@@ -122,7 +122,7 @@ async def ping(interaction: discord.Interaction):
 
 
 @bot.tree.command(name='commands',description='List of Commands')
-async def commands(interaction: discord.Interaction, message: discord.Message):
+async def commands(interaction: discord.Interaction):
     embed = discord.Embed(
         title='Bot Commands',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
@@ -272,7 +272,7 @@ async def calc(ctx, *args):
 
 # TODO dictionary
 @bot.tree.command(name='commands',description='List of Commands')
-async def mean(interaction: discord.Interaction, message: discord.Message):
+async def mean(interaction: discord.Interaction):
     await interaction.response.send_message('**This command is still in development**')
 
 
