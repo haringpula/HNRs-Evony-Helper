@@ -25,7 +25,7 @@ import discord.ext.commands.bot
 # Initialization
 my_secret = os.environ['token']
 prefix = '/'
-version = 1.8
+version = 1.9
 logo = 'https://cdn.discordapp.com/attachments/968595427228286976/972125616730144778/honor2_031019-1.jpg'
 github = 'https://github.com/haringpula/HNRs-Evony-Helper'
 intents = discord.Intents.all()
@@ -123,6 +123,8 @@ async def commands(interaction: discord.Interaction):
         url='https://github.com/haringpula/HNRs-Evony-Helper',
         description='Here are the commands!',
         color=discord.Color.dark_gray())
+    embed.set_author(name=interaction.user,
+                     icon_url=interaction.user.display_avatar)
     embed.set_thumbnail(url=logo)
     embed.add_field(name='$help', value='Show help', inline=False)
     embed.add_field(name='$commands', value='Show commands list', inline=False)
@@ -137,8 +139,8 @@ async def commands(interaction: discord.Interaction):
         text="Information requested by: {}".format(interaction.user))
     await interaction.response.send_message(embed=embed)
 
-@bot.command()
-async def time(ctx):
+@bot.tree.command(name='time',description='Show current server time/day')
+async def time(interaction: discord.Interaction):
     now = datetime.datetime.now()
     day_name = now.strftime("%A")
     time = now.strftime("%H:%M:%S")
@@ -149,12 +151,12 @@ async def time(ctx):
         description="The server is on {}, {} at {}".format(
             day_name, day_full, time),
         color=discord.Color.dark_gray())
-    embed.set_author(name=ctx.author.display_name,
-                     icon_url=ctx.author.avatar_url)
+    embed.set_author(name=interaction.user,
+                     icon_url=interaction.user.display_avatar)
     embed.set_thumbnail(url=logo)
     embed.set_footer(
-        text="Information requested by: {}".format(ctx.author.display_name))
-    await ctx.send(embed=embed)
+        text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>")
+    await interaction.response.send_message(embed=embed)
     del now
     del day_full
     del day_name
