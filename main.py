@@ -162,8 +162,8 @@ async def time(interaction: discord.Interaction):
     del day_name
     del time
 
-
-@bot.tree.command(name='help',description='Show what the ')
+# Help to start using the bot
+@bot.tree.command(name='help',description='Show what the bot is about')
 async def help(interaction: discord.Interaction):
     embed = discord.Embed(
         title='[HNR] Evony Bot',
@@ -171,7 +171,7 @@ async def help(interaction: discord.Interaction):
         description='**Evony TKR Discord Helper Bot!**',
         color=discord.Color.dark_gray())
     embed.set_author(name="**For Evony The Kings Return**",
-                     icon_url=bot.user.avatar_url)
+                     icon_url=bot.avatar.url)
     embed.set_thumbnail(url=logo)
     embed.add_field(name='`$commands`',
                     value='**To show commands list to begin**',
