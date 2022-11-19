@@ -12,7 +12,6 @@
 # ~~~~~~~~~~███████████REMOVE IN FINAL VERSION ██ SAPERE AUDE███████████~~~~~~~~~~
 #
 
-# NOTE: Clear unused import
 import os
 import discord
 import requests
@@ -78,7 +77,7 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 3000, 9000, 3000, 0, 81], [0, 4500, 13500, 4500, 200, 122],
      [0, 7500, 22500, 7500, 800, 163]]
 
-
+# Startup activities
 @bot.event
 async def on_ready():
     print(f'{bot.user} is now live!')
@@ -87,7 +86,7 @@ async def on_ready():
         event.start()
         print("Announcement Started")
 
-
+# Synchronize slash commands to tree
 @bot.command()
 async def sync(ctx):
     try:
@@ -96,7 +95,7 @@ async def sync(ctx):
     except Exception as e:
         print(e)
 
-
+# Event task
 @tasks.loop(minutes=1)
 async def event():
     now = datetime.datetime.now()
@@ -115,7 +114,7 @@ async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"pong")
     print(f"{interaction.user} is talking to {bot.user} on {interaction.guild}")
 
-
+# Show commands list
 @bot.tree.command(name='commands',description='List of Commands')
 async def commands(interaction: discord.Interaction):
     embed = discord.Embed(
@@ -126,19 +125,20 @@ async def commands(interaction: discord.Interaction):
     embed.set_author(name=interaction.user,
                      icon_url=interaction.user.display_avatar)
     embed.set_thumbnail(url=logo)
-    embed.add_field(name='$help', value='Show help', inline=False)
-    embed.add_field(name='$commands', value='Show commands list', inline=False)
-    embed.add_field(name='$time',
+    embed.add_field(name='/help', value='Show help', inline=False)
+    embed.add_field(name='/commands', value='Show commands list', inline=False)
+    embed.add_field(name='/time',
                     value='Show current server time/day',
                     inline=False)
-    embed.add_field(name='$calc', value='Calculate Troop Costs', inline=False)
-    embed.add_field(name='$mean',
+    embed.add_field(name='/calc', value='Calculate Troop Costs', inline=False)
+    embed.add_field(name='/mean',
                     value='Give Evony abbreviation meaning *In development*',
                     inline=False)
     embed.set_footer(
-        text="Information requested by: {}".format(interaction.user))
+        text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>")
     await interaction.response.send_message(embed=embed)
 
+# Command to show current server day/time
 @bot.tree.command(name='time',description='Show current server time/day')
 async def time(interaction: discord.Interaction):
     now = datetime.datetime.now()
@@ -163,8 +163,8 @@ async def time(interaction: discord.Interaction):
     del time
 
 
-@bot.command()
-async def help(ctx):
+@bot.tree.command(name='help',description='Show what the ')
+async def help(interaction: discord.Interaction):
     embed = discord.Embed(
         title='[HNR] Evony Bot',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
@@ -174,7 +174,7 @@ async def help(ctx):
                      icon_url=bot.user.avatar_url)
     embed.set_thumbnail(url=logo)
     embed.add_field(name='`$commands`',
-                    value='To show commands list',
+                    value='**To show commands list to begin**',
                     inline=False)
     embed.add_field(name='Server Time',
                     value='Get the current server time/day in Evony',
@@ -185,7 +185,7 @@ async def help(ctx):
     embed.set_footer(
         text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>"
     )
-    await ctx.send(embed=embed)
+    await interaction.response.send_message(embed=embed)
 
 
 @bot.command()
