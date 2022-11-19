@@ -32,7 +32,7 @@ intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix=prefix,  intents=intents)
 activity = discord.Activity(
-    name="for $help",
+    name=f"{len(bot.guilds)} servers watched",
     type=discord.ActivityType.watching)
 bot.remove_command('help')
 
@@ -88,7 +88,6 @@ async def hello(interaction: discord.Interaction):
 async def on_ready():
     print(f'{bot.user} is now live!')
     await bot.change_presence(activity=activity)
-    #await tree.sync(guild=discord.Object(id=835899395219652671))
     if not event.is_running():
         event.start()
         print("Announcement Started")
