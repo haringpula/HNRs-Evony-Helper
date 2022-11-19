@@ -180,14 +180,14 @@ async def help(interaction: discord.Interaction):
                     value='Get the current server time/day in Evony',
                     inline=True)
     embed.add_field(name='Troop Calculator',
-                    value='Calculate rasources needed for troops',
+                    value='Calculate rasources needed for troops *slash not implemented*',
                     inline=True)
     embed.set_footer(
         text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>"
     )
     await interaction.response.send_message(embed=embed)
 
-
+# Calculator
 @bot.command()
 async def calc(ctx, *args):
     if len(args) != 3:
