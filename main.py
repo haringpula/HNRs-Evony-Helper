@@ -107,11 +107,22 @@ async def event():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=00, minute=00).strftime("%H:%M")
+    midnight = datetime.time(hour=14, minute=5).strftime("%H:%M")
     if time != midnight:
         return
     channel = bot.get_channel(967433695495598150)
-    # await channel.send("Event succesful")
+    embed = discord.Embed(
+        title='Battle of Constantinople',
+        url='https://github.com/haringpula/HNRs-Evony-Helper',
+        description='Here are the commands!',
+        color=discord.Color.dark_gray())
+    embed.set_author(name="**For Evony The Kings Return**",
+                     icon_url=bot.user.display_avatar)
+    embed.set_thumbnail(url=logo)
+    embed.add_field(name='The **Battle of Constantinople** has now started', value='*Dont forget to log in and check your bubble!*', inline=False)
+    embed.set_footer(
+        text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>")
+    await channel.send(embed=embed)
     print("Announce Working")
 
 # Commands test
@@ -204,7 +215,7 @@ async def help(interaction: discord.Interaction):
 # Calculator
 
 
-@bot.tree.command(name='cal', description='Calculate required resources for troops')
+@bot.tree.command(name='calc', description='Calculate required resources for troops')
 async def calc(interaction: discord.Interaction, type: str, tier: int, num: int):
     # if len(args) != 3:
     #     await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
