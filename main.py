@@ -78,6 +78,8 @@ S = [[0, 100, 60, 0, 0, 2], [0, 120, 140, 0, 0, 2.7],
      [0, 7500, 22500, 7500, 800, 163]]
 
 # Startup activities
+
+
 @bot.event
 async def on_ready():
     print(f'{bot.user} is now live!')
@@ -87,6 +89,8 @@ async def on_ready():
         print("Announcement Started")
 
 # Synchronize slash commands to tree
+
+
 @bot.command()
 async def sync(ctx):
     try:
@@ -96,6 +100,8 @@ async def sync(ctx):
         print(e)
 
 # Event task
+
+
 @tasks.loop(minutes=1)
 async def event():
     now = datetime.datetime.now()
@@ -109,13 +115,17 @@ async def event():
     print("Announce Working")
 
 # Commands test
+
+
 @bot.tree.command(name='ping', description='Ping Pong')
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"pong")
     print(f"{interaction.user} is talking to {bot.user} on {interaction.guild}")
 
 # Show commands list
-@bot.tree.command(name='commands',description='List of Commands')
+
+
+@bot.tree.command(name='commands', description='List of Commands')
 async def commands(interaction: discord.Interaction):
     embed = discord.Embed(
         title='Bot Commands',
@@ -139,7 +149,9 @@ async def commands(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 # Command to show current server day/time
-@bot.tree.command(name='time',description='Show current server time/day')
+
+
+@bot.tree.command(name='time', description='Show current server time/day')
 async def time(interaction: discord.Interaction):
     now = datetime.datetime.now()
     day_name = now.strftime("%A")
@@ -163,7 +175,9 @@ async def time(interaction: discord.Interaction):
     del time
 
 # Help to start using the bot
-@bot.tree.command(name='help',description='Show what the bot is about')
+
+
+@bot.tree.command(name='help', description='Show what the bot is about')
 async def help(interaction: discord.Interaction):
     embed = discord.Embed(
         title='[HNR] Evony Bot',
@@ -188,25 +202,25 @@ async def help(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 # Calculator
-@bot.command()
-async def calc(ctx, *args):
-    if len(args) != 3:
-        await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
-        await ctx.send(
-            'Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want'
-        )
-        return
-    type = args[0].upper()
-    tier = int(args[1])
-    num = int(args[2])
+
+
+@bot.tree.command(name='cal', description='Calculate required resources for troops')
+async def calc(interaction: discord.Interaction, type: str, tier: int, num: int):
+    # if len(args) != 3:
+    #     await ctx.send('Usage: `$calc TroopType TroopTier TroopNum`')
+    #     await ctx.send(
+    #         'Troop Type: (M=Mounted, G=Ground, R=Ranged, S=Siege)\nTroop Tier: (1-15)\nTroop Number: How Many Troops you want'
+    #     )
+    #     return
+
     if (type not in ['M', 'G', 'R', 'S']):
-        await ctx.send('**Invalid Troop Type**')
+        await interaction.response.send_message('**Invalid Troop Type**')
         return
     if (tier < 1) or (tier > 15):
-        await ctx.send('**Invalid Troop Tier**')
+        await interaction.response.send_message('**Invalid Troop Tier**')
         return
     if (num < 1):
-        await ctx.send('**Invalid Troop Amount**')
+        await interaction.response.send_message('**Invalid Troop Amount**')
         return
     if type == 'M':
         food = num * M[tier - 1][0]
@@ -239,9 +253,10 @@ async def calc(ctx, *args):
     embed = discord.Embed(
         title='Troop Calculator',
         url='https://github.com/haringpula/HNRs-Evony-Helper',
-        description='Hey <@{}>, here is your Troop Calculation!'.
-        format(ctx.author.id),
+        description='Here are the Resources Needed',
         color=discord.Color.dark_gray())
+    embed.set_author(name=interaction.user,
+                     icon_url=interaction.user.display_avatar)
     embed.set_thumbnail(url=logo)
     embed.add_field(
         name='Input',
@@ -253,9 +268,9 @@ async def calc(ctx, *args):
         value='Food = {}\nWood = {}\nStone = {}\nIron = {}\nGold = {}\nPower Increase: {}'
         .format(food, wood, stone, iron, gold, power),
         inline=True)
-    embed.set_footer(text="Information requested by: {}".format(
-        ctx.author.display_name))
-    await ctx.send(embed=embed)
+    embed.set_footer(
+        text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>")
+    await interaction.response.send_message(embed=embed)
     del type
     del tier
     del num
@@ -268,7 +283,7 @@ async def calc(ctx, *args):
 
 
 # TODO dictionary
-@bot.tree.command(name='mean',description='Shorthand words for Evony TKR')
+@bot.tree.command(name='mean', description='Shorthand words for Evony TKR')
 async def mean(interaction: discord.Interaction):
     await interaction.response.send_message('**This command is still in development**')
 
