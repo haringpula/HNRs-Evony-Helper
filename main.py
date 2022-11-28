@@ -107,7 +107,7 @@ async def event():
     now = datetime.datetime.now()
     time = now.strftime("%H:%M")
     # Create the time on which the task should always run
-    midnight = datetime.time(hour=14, minute=15).strftime("%H:%M")
+    midnight = datetime.time(hour=00, minute=00).strftime("%H:%M")
     if time != midnight:
         return
     channel = bot.get_channel(967433695495598150)
