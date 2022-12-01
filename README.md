@@ -74,9 +74,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/haringpula/HNRs-Evony-Helper)
 
-Discord Bot for HNR's Evony The Kings Return Server. Created to aid HNR alliance. Can compute troop costs and power increase, and handy commands to show current server time/day. Made with discord.py and hosted on Repl.it by author [King Red Sanchez](king.red@gmail.com).
+Discord Bot for HNR's Evony The Kings Return Server. Created to aid HNR alliance. Can compute troop costs and power increase, and handy commands to show current server time/day. Made with discord.py and hosted on ~~Repl.it~~ ~~Heroku~~ ~~Koyeb~~ by author [King Red Sanchez](king.red@gmail.com).
+
+THIS PROJECT HAS BEEN DISCONTINUED DUE TO HOSTING ISSUES.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -84,6 +86,8 @@ Discord Bot for HNR's Evony The Kings Return Server. Created to aid HNR alliance
 
 * [Python](https://www.python.org/)
 * [Repl.it](https://replit.com/)
+* [Heroku](https://www.heroku.com/)
+* [Koyeb](https://www.koyeb.com/)
 * [discord.py](https://discordpy.readthedocs.io/en/stable/)
 * [Flask](https://flask.palletsprojects.com/en/2.1.x/)
 
@@ -93,6 +97,8 @@ Discord Bot for HNR's Evony The Kings Return Server. Created to aid HNR alliance
 ## Getting Started
 
 To get a copy up and running follow these simple steps.
+
+THIS IS NOW OUT OF DATE, YOU CAN STILL HOST BOTS ON REPL.IT BUT IT IS NOT A FEASIBLE STRATEGY.
 
 ### Prerequisites
 
@@ -112,7 +118,7 @@ This Repl implements *discord.py* with `@bot.commands`, and you can install this
 
 3. Enter your **TOKEN** in *Secrets (Environment Variables)* tab, or with a `.env` file with
 
-   ```
+   ```text
    TOKEN = 'ENTER YOUR TOKEN';
    ```
 
@@ -125,7 +131,7 @@ This Repl implements *discord.py* with `@bot.commands`, and you can install this
 
 * `$calc TroopType TroopTier Troop Amount` will display the needed resources to complete that amount
 
-  ```
+  ```text
   $calc r 14 1000000
   
   Input
@@ -151,11 +157,22 @@ _For more examples, please refer to the [Documentation](https://github.com/harin
 
 * [x] Evony Troop Calculator
 * [ ] Evony Terminology Database
-* [ ] Evony Server Time/Day commands
+* [x] Evony Server Time/Day commands
   * [x] Time/Day support
-  * [ ] Event Reminder
+  * [x] Event Reminder
 
 See the [open issues](https://github.com/haringpula/HNRs-Evony-Helper/issues) for a full list of proposed features (and known issues).
+
+### Showcase
+
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802188166086716/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802188539375686/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802188887494738/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802189244022794/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802189575368744/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802189915099176/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802190275821568/unknown.png)
+![img](https://cdn.discordapp.com/attachments/835899395697541121/1047802190682656788/unknown.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
