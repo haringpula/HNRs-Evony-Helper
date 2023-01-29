@@ -38,7 +38,7 @@ activity = discord.Activity(
 bot.remove_command('help')
 
 
-HOST = '192.168.0.1' 
+HOST = '' 
 PORT = 8080 
 
 # Logging
@@ -319,7 +319,7 @@ try:
     s.listen(10)
     conn, addr = s.accept()
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
-    
+
     bot.run(my_secret)
     # Web Server to keep bot online
     #keep_alive()  
