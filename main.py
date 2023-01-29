@@ -309,10 +309,6 @@ async def mean(interaction: discord.Interaction):
 
 # Catching Discord Rate Limits
 try:
-    
-    bot.run(my_secret)
-    # Web Server to keep bot online
-    #keep_alive()  
     while(True):
         # Try listening to a port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -326,6 +322,9 @@ try:
         conn, addr = s.accept()
         print('Connected with ' + addr[0] + ':' + str(addr[1]))
         time.sleep(900)
+    bot.run(my_secret)
+    # Web Server to keep bot online
+    #keep_alive()  
 	
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
