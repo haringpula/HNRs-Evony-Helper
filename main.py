@@ -20,6 +20,8 @@ import datetime
 from discord.ext import commands, tasks
 from keep_alive import keep_alive
 import discord.ext.commands.bot
+import socket
+import sys
 
 # Initialization
 my_secret = os.environ['token']
@@ -34,6 +36,10 @@ activity = discord.Activity(
     name=f"{len(bot.guilds)} servers | /help",
     type=discord.ActivityType.watching)
 bot.remove_command('help')
+
+
+HOST = '' 
+PORT = 8080 
 
 # Logging
 logger = logging.getLogger('discord')
@@ -119,7 +125,8 @@ async def event():
     embed.set_author(name="**For Evony The Kings Return**",
                      icon_url=bot.user.display_avatar)
     embed.set_thumbnail(url=logo)
-    embed.add_field(name='The **Battle of Constantinople** has now started', value='*Dont forget to log in and check your bubble!*', inline=False)
+    embed.add_field(name='The **Battle of Constantinople** has now started',
+                    value='*Dont forget to log in and check your bubble!*', inline=False)
     embed.set_footer(
         text="Made by:\nharingpula <@645255797340766218>\nLordickenstein <@756084838154633237>")
     await channel.send(embed=embed)
@@ -303,7 +310,19 @@ async def mean(interaction: discord.Interaction):
 try:
     bot.run(my_secret)
     # Web Server to keep bot online
-    keep_alive()
+    #keep_alive()
+    # Try listening to a port
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.bind((HOST, PORT))
+    except socket.error as msg:
+        print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+        sys.exit()
+    print('Socket bind complete')
+    s.listen(10)
+    conn, addr = s.accept()
+    print('Connected with ' + addr[0] + ':' + str(addr[1]))
+	
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
     try:
