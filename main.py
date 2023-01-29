@@ -22,7 +22,7 @@ from keep_alive import keep_alive
 import discord.ext.commands.bot
 import socket
 import sys
-import time
+import time as t
 
 # Initialization
 my_secret = os.environ['token']
@@ -325,7 +325,7 @@ try:
         if not looper:
             bot.run(my_secret)
             looper = True
-        time.sleep(60)
+        t.sleep(30)
     # Web Server to keep bot online
     #keep_alive()  
 	
