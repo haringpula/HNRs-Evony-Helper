@@ -22,6 +22,7 @@ from keep_alive import keep_alive
 import discord.ext.commands.bot
 import socket
 import sys
+import time
 
 # Initialization
 my_secret = os.environ['token']
@@ -308,21 +309,23 @@ async def mean(interaction: discord.Interaction):
 
 # Catching Discord Rate Limits
 try:
-    # Try listening to a port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        s.bind((HOST, PORT))
-    except socket.error as msg:
-        print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
-        sys.exit()
-    print('Socket bind complete')
-    s.listen(10)
-    conn, addr = s.accept()
-    print('Connected with ' + addr[0] + ':' + str(addr[1]))
-
+    
     bot.run(my_secret)
     # Web Server to keep bot online
     #keep_alive()  
+    while(True):
+        # Try listening to a port
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            s.bind((HOST, PORT))
+        except socket.error as msg:
+            print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+            sys.exit()
+        print('Socket bind complete')
+        s.listen(10)
+        conn, addr = s.accept()
+        print('Connected with ' + addr[0] + ':' + str(addr[1]))
+        time.sleep(900)
 	
 except discord.errors.HTTPException:
     r = requests.head(url="https://discord.com/api/v1")
