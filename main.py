@@ -309,6 +309,7 @@ async def mean(interaction: discord.Interaction):
 
 # Catching Discord Rate Limits
 try:
+    looper = False
     while(True):
         # Try listening to a port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -321,8 +322,10 @@ try:
         s.listen(10)
         conn, addr = s.accept()
         print('Connected with ' + addr[0] + ':' + str(addr[1]))
-        time.sleep(900)
-    bot.run(my_secret)
+        if not looper:
+            bot.run(my_secret)
+            looper = True
+        time.sleep(60)
     # Web Server to keep bot online
     #keep_alive()  
 	
