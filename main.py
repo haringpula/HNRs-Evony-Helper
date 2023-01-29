@@ -38,7 +38,7 @@ activity = discord.Activity(
 bot.remove_command('help')
 
 
-HOST = '' 
+HOST = '0.0.0.0' 
 PORT = 8080 
 
 # Logging
